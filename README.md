@@ -1,7 +1,6 @@
-**Project Title: n8n LinkedIn Auto-Poster with AI-driven Content & Image Selection**
+##**Project Title: n8n LinkedIn Auto-Poster with AI-driven Content & Image Selection**
 
-**Overview**
-This repository contains an automated n8n workflow that creates and publishes LinkedIn posts on a scheduled basis using AI agents. It generates content, searches (or generates) suitable images, logs post details in Google Sheets, and sends Telegram notifications at key steps. If manual image review is skipped, posts are still published without images to maintain consistency.
+#**Overview** This repository contains an automated n8n workflow that creates and publishes LinkedIn posts on a scheduled basis using AI agents. It generates content, searches (or generates) suitable images, logs post details in Google Sheets, and sends Telegram notifications at key steps. If manual image review is skipped, posts are still published without images to maintain consistency.
 
 ---
 
@@ -21,7 +20,7 @@ This repository contains an automated n8n workflow that creates and publishes Li
 
 ```mermaid
 flowchart LR
-  subgraph "Schedule Trigger"
+  subgraph Schedule Trigger
     A[Schedule Trigger @ 11:00 AM] --> B[AI Agent: Content]
   end
 
@@ -34,8 +33,8 @@ flowchart LR
   G -- No --> I[Create LinkedIn Post without Image]
   H --> J[Update Row: ✅ Posted]
   I --> J
-  J --> K[Telegram: "Content posted!"]
-  
+  J --> K[Telegram: Content posted!]
+
   subgraph Notifications
     B --> L[Telegram: Content Generated]
     C --> M[Telegram: Saved to Sheets]
@@ -60,8 +59,8 @@ flowchart LR
 1. **Clone this repo**:
 
    ```bash
-   git clone https://github.com/YOUR_USERNAME/your-repo-name.git
-   cd your-repo-name
+   git clone https://github.com/dev34250/n8n-LinkedIn.git
+   cd n8n-LinkedIn
    ```
 2. **Import Workflow**:
 
@@ -157,5 +156,5 @@ This project is licensed under the [MIT License](LICENSE).
 ## ✉️ Contact
 
 * **Maintainer**: YOUR NAME HERE
-* **Email**: [your.email@example.com](mailto:your.email@example.com)
-* **LinkedIn**: [Your LinkedIn Profile](https://www.linkedin.com/in/yourprofile)
+* **Email**: dev34250@gmail.com(mailto:dev34250@gmail.com)
+* **LinkedIn**: [DEV SHARMA](https://www.linkedin.com/in/devsharma2004/)
