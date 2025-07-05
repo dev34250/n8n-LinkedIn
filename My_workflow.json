@@ -1,0 +1,1024 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "You are an expert LinkedIn content strategist and tech journalist combined.  \n\n1. **Research phase**  \n   - First, automatically scan the latest publicly available news, trending on X.com(formerly twitter), blog posts, or press releases (within the past 48 hours) for any **notable developments in AI/ML**—breakthrough papers, product launches, open‑source releases, benchmark results, or major industry moves.  \n   - If you find **at least one** compelling AI/ML item, choose the **single most engaging** story (e.g., a major new model, a novel interpretability tool, a significant real‑world deployment).  \n   - **Otherwise**, broaden your search to general tech news (e.g., consumer gadgets, cybersecurity, blockchain, cloud services, developer tools) and pick the most newsworthy topic.  \n\n2. **Post‑writing phase**  \n   - **Length:** Aim for **150–250 words**.  \n   - **Hook:** Lead with a strong opening (surprising stat, bold claim, question, or one‑sentence anecdote) to stop the scroll.  \n   - **Structure:**  \n     - 2–4 very short paragraphs or 3–5 bullet points.  \n     - Include **at least one concrete data point** or citation.  \n     - Add a **mini case study/example** or quote from a credible source.  \n   - **Tone:** Conversational, authentic, human‑centered. Define or simplify any jargon. Acknowledge challenges or controversies.  \n   - **CTA:** End with a simple prompt such as “What do you think?”, “Have you tried this yet?”, or “Share your thoughts below!”  \n\n3. **Style guardrails**  \n   - No buzzword bingo or vague fluff.  \n   - No overt marketing speak—keep it genuine.  \n   - No personal pronouns beyond “we”/“our industry” unless quoting a source.  \n\n**Task:** After your research, write the LinkedIn post accordingly—focused on the chosen AI/ML (or fallback tech) story—ready for immediate publishing.",
+        "options": {}
+      },
+      "id": "502a3521-6dc7-4762-84e7-233c2c12de11",
+      "name": "Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        -420,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -420,
+        400
+      ],
+      "id": "24705a72-455c-42f6-a47b-4941ec048e39",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "uK74qCaEPIAIyoAn",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const day = new Date().getDate();\nreturn [{ json: { source: (day % 2 === 1) ? 'A' : 'B' } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -860,
+        440
+      ],
+      "id": "ea480c80-ce2d-4802-8ac8-f65865ab8053",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.source }}",
+                    "rightValue": "A",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "95dcc34f-6623-4ec2-afd1-47cf51128466"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "e5f1cc16-99dc-4959-ae5d-2b08b2c4dcac",
+                    "leftValue": "={{ $json.source }}",
+                    "rightValue": "B",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -640,
+        440
+      ],
+      "id": "3e5ec78a-5d2a-47ae-8be2-1ae40dfd18b6",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "You are a savvy LinkedIn community manager and tech recruiter combined, focused on serving Indian students graduating in 2026 or later. Your mission is to automatically gather and share the very latest job and internship openings at top‑tier tech companies that either:\n\n- Accept Indian applicants (global roles open to India),  \n- Are based in India, or  \n- Are fully remote.  \n\nFollow these steps:\n\n1. **Discovery Phase**  \n   - **Scan** LinkedIn “Jobs” posts, company career pages, and reputable tech‑job boards (e.g., AngelList, Handshake, Lever) for **new** postings (posted within the last 72 hours).  \n   - **Filter** for companies with strong employer brands (e.g., FAANG, unicorn startups, leading enterprises in AI/ML, cloud, cybersecurity, developer tools) that explicitly mention eligibility for Indians, India‑based positions, or remote work.  \n   - **Select** the 5–7 most compelling opportunities across internships, entry‑level, and new‑grad roles.\n\n2. **Content Structure**  \n   - **Opening Hook** (1 sentence): e.g. “🇮🇳 Top 5 New‑Grad & Intern Roles Open to Indians (Batch ’26+)!”  \n   - **Job Listings** (bullet list), each containing:  \n     - **Company Name**  \n     - **Role Title**  \n     - **Experience Level** (Internship, New Grad, 0–2 yrs) + **Batches Eligible** (e.g., “Batch of ’26–’28”)  \n     - **Location** (“India,” “Remote — Open to India,” or specific city)  \n     - **One‑line Perk or Highlight** (stipend, relocation support, visa assistance, etc.)  \n     - **Apply Link** (shortened URL)  \n   - **Tone:** Crisp, upbeat, and slightly playful—avoid generic “we’re hiring” copy.\n\n3. **Closing CTA**  \n   - “👇 Found one you like? Comment below with your chosen opening and I’ll leverage my network to secure you a referral—if you meet the criteria!”\n\n4. **Formatting & Length**  \n   - **150–200 words** total.  \n   - **2–3 short paragraphs** (hook + listings + CTA).  \n   - Use 1–2 relevant emojis for emphasis.\n\n**Task:** After discovery and filtering, write the LinkedIn post as described—ready for immediate publishing to an Indian audience.",
+        "options": {}
+      },
+      "id": "609c7a41-92da-4c2f-b332-c2b6a38ddb92",
+      "name": "Agent1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        -100,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -420,
+        700
+      ],
+      "id": "ffa39495-0dd2-4b4a-829b-b0cf24ff965b",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "uK74qCaEPIAIyoAn",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "person": "TL70CRNMhK",
+        "text": "={{ $json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.linkedIn",
+      "typeVersion": 1,
+      "position": [
+        340,
+        720
+      ],
+      "id": "394c4349-4b71-4b22-aa6e-cd96d4e0c9e6",
+      "name": "Create a post1",
+      "credentials": {
+        "linkedInOAuth2Api": {
+          "id": "qyCHYGPffqo0Asdi",
+          "name": "LinkedIn account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an expert LinkedIn content strategist. When I paste my post text below, you should analyze its main theme and tone, then reply with a single-line Google image search query that will help me find a fitting image to attach.\n{{ $json.output }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -20,
+        60
+      ],
+      "id": "ab296e4b-23a4-43e5-bb24-dfc0bb323aa5",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -420,
+        560
+      ],
+      "id": "16b363ca-3f19-4716-846b-07ef3a7f9b7c",
+      "name": "OpenAI Chat Model2",
+      "credentials": {
+        "openAiApi": {
+          "id": "uK74qCaEPIAIyoAn",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "1296559885",
+        "text": "={{ $json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        300,
+        160
+      ],
+      "id": "7563e9f7-f9eb-4576-ad5f-b392f446ffd4",
+      "name": "Send a text message2",
+      "webhookId": "8f1ab691-36eb-4c42-929b-54d6c46fbe91",
+      "credentials": {
+        "telegramApi": {
+          "id": "AbZrqY6oJx6iKOYY",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "1296559885",
+        "text": "Content posted!",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1340,
+        340
+      ],
+      "id": "1766e01a-6357-4db2-95e6-e392c5823836",
+      "name": "Send a text message1",
+      "webhookId": "3338d86c-0857-4dbf-9ad3-c0ed0b587934",
+      "credentials": {
+        "telegramApi": {
+          "id": "AbZrqY6oJx6iKOYY",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "1296559885",
+        "text": "Jobs posted!",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        640,
+        720
+      ],
+      "id": "1673a5c8-74cc-4cac-addd-bf6078777e50",
+      "name": "Send a text message",
+      "webhookId": "3338d86c-0857-4dbf-9ad3-c0ed0b587934",
+      "credentials": {
+        "telegramApi": {
+          "id": "AbZrqY6oJx6iKOYY",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/19CGSth6FGw-FsO7uOb-fZJVpobhJplQNILM7Swoo7Ug/edit?gid=99656907#gid=99656907",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 99656907,
+          "mode": "list",
+          "cachedResultName": "content",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/19CGSth6FGw-FsO7uOb-fZJVpobhJplQNILM7Swoo7Ug/edit#gid=99656907"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Date of the post": "==ROW() - 1"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Date of the post",
+              "displayName": "Date of the post",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Image URL",
+              "displayName": "Image URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Posted",
+              "displayName": "Posted",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -20,
+        340
+      ],
+      "id": "c5d0f1c7-4c1c-430d-b78c-e29d6d0d844d",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "EpOtWrUIuzLQ0wVF",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "1296559885",
+        "text": "Content saved to Sheets!",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        280,
+        340
+      ],
+      "id": "fbb3f50e-be6f-4a5a-a094-10fd5992c268",
+      "name": "Send a text message3",
+      "webhookId": "3338d86c-0857-4dbf-9ad3-c0ed0b587934",
+      "credentials": {
+        "telegramApi": {
+          "id": "AbZrqY6oJx6iKOYY",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "person": "TL70CRNMhK",
+        "text": "={{ $('Agent').item.json.output }}",
+        "shareMediaCategory": "IMAGE",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.linkedIn",
+      "typeVersion": 1,
+      "position": [
+        900,
+        340
+      ],
+      "id": "822abfc4-9def-40fe-929f-4eff2c4a42be",
+      "name": "Create a post",
+      "credentials": {
+        "linkedInOAuth2Api": {
+          "id": "qyCHYGPffqo0Asdi",
+          "name": "LinkedIn account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -80,
+        540
+      ],
+      "id": "ce538fa3-4346-428b-af39-8251d7e29044",
+      "name": "Wait",
+      "webhookId": "1af2149f-9f62-4481-b0be-ad5c3011a54e"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/19CGSth6FGw-FsO7uOb-fZJVpobhJplQNILM7Swoo7Ug/edit?usp=sharing",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 99656907,
+          "mode": "list",
+          "cachedResultName": "content",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/19CGSth6FGw-FsO7uOb-fZJVpobhJplQNILM7Swoo7Ug/edit#gid=99656907"
+        },
+        "options": {
+          "dataLocationOnSheet": {
+            "values": {
+              "rangeDefinition": "detectAutomatically"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        120,
+        540
+      ],
+      "id": "1f07cae7-e444-4358-acfb-680d9006ab13",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "EpOtWrUIuzLQ0wVF",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const latest = $input.all().reduce((max, item) => {\n  return (item.json.row_number > (max?.json.row_number ?? 0)) ? item : max;\n}, null);\nreturn [latest];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        340,
+        540
+      ],
+      "id": "1a9f1df6-c5fd-40be-934e-1b3048eed25a",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "20c2d286-3a3b-4c98-9443-ebae120a8fca",
+              "leftValue": "={{ $json.error }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "object",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        780,
+        540
+      ],
+      "id": "ef502109-7bc2-4b91-bd45-ad1a9a74c09e",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json['Image URL'] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        580,
+        540
+      ],
+      "id": "f39e494c-5a7c-45a4-a513-4f2f8ecd926b",
+      "name": "Node B",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 11,
+              "triggerAtMinute": null
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1060,
+        440
+      ],
+      "id": "4d55cb9d-00bd-407c-a372-ead97a2b63d3",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "chatId": "1296559885",
+        "text": "Content posted!",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1340,
+        720
+      ],
+      "id": "cf6d892c-c334-49ce-9c30-be56dd8ab1c6",
+      "name": "Send a text message4",
+      "webhookId": "3338d86c-0857-4dbf-9ad3-c0ed0b587934",
+      "credentials": {
+        "telegramApi": {
+          "id": "AbZrqY6oJx6iKOYY",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "person": "TL70CRNMhK",
+        "text": "={{ $('Agent').item.json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.linkedIn",
+      "typeVersion": 1,
+      "position": [
+        900,
+        720
+      ],
+      "id": "d004f93e-b854-4904-84c5-fdb65096f4d5",
+      "name": "Create a post2",
+      "credentials": {
+        "linkedInOAuth2Api": {
+          "id": "qyCHYGPffqo0Asdi",
+          "name": "LinkedIn account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/19CGSth6FGw-FsO7uOb-fZJVpobhJplQNILM7Swoo7Ug/edit?gid=99656907#gid=99656907",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 99656907,
+          "mode": "list",
+          "cachedResultName": "content",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/19CGSth6FGw-FsO7uOb-fZJVpobhJplQNILM7Swoo7Ug/edit#gid=99656907"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Posted": "✅",
+            "row_number": "={{ $('Get row(s) in sheet').item.json.row_number}}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "Date of the post",
+              "displayName": "Date of the post",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Image URL",
+              "displayName": "Image URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Posted",
+              "displayName": "Posted",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1120,
+        340
+      ],
+      "id": "198ab8e9-d74b-416a-a7b0-2e597b864c7b",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "EpOtWrUIuzLQ0wVF",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/19CGSth6FGw-FsO7uOb-fZJVpobhJplQNILM7Swoo7Ug/edit?gid=99656907#gid=99656907",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 99656907,
+          "mode": "list",
+          "cachedResultName": "content",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/19CGSth6FGw-FsO7uOb-fZJVpobhJplQNILM7Swoo7Ug/edit#gid=99656907"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Posted": "✅",
+            "row_number": "={{ $('Get row(s) in sheet').item.json.row_number}}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "Date of the post",
+              "displayName": "Date of the post",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Image URL",
+              "displayName": "Image URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Posted",
+              "displayName": "Posted",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1120,
+        720
+      ],
+      "id": "c48142c2-5173-42f9-ae6f-3de9e8bce0c9",
+      "name": "Update row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "EpOtWrUIuzLQ0wVF",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Agent": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent1": {
+      "main": [
+        [
+          {
+            "node": "Create a post1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a post1": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a text message2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Send a text message3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a post": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Node B",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Create a post",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create a post2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Node B": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message1": {
+      "main": [
+        []
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message4": {
+      "main": [
+        []
+      ]
+    },
+    "Create a post2": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Send a text message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet1": {
+      "main": [
+        [
+          {
+            "node": "Send a text message4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Kolkata",
+    "callerPolicy": "workflowsFromSameOwner",
+    "executionTimeout": -1
+  },
+  "versionId": "b37b6b45-6f7d-4b15-b0b9-eecc71e2c571",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "61950adbf2a45057cf86db78736e0f16ca9c8eeb9f4fcada284bdab4bbe02a89"
+  },
+  "id": "X2CFXXkwQW1vZkuX",
+  "tags": []
+}
