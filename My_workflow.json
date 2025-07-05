@@ -3,16 +3,16 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "//** YOUR PROMPT COMES HERE FOR THE CONTENT **//",
+        "text": "YOUR PROMPT FOR CONTENT TO BE POSTED COMES HERE",
         "options": {}
       },
-      "id": "502a3521-6dc7-4762-84e7-233c2c12de11",
+      "id": "d787cd28-c31b-4b6b-aa64-d9c0a70bfce9",
       "name": "Agent",
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 1.7,
       "position": [
-        -420,
-        160
+        -600,
+        400
       ]
     },
     {
@@ -20,17 +20,17 @@
         "model": {
           "__rl": true,
           "mode": "list",
-          "value": " //** THE OPENAI MODEL COMES HERE **//"
+          "value": "YOUR OPENAI SUPPORTED MODEL COMES HERE"
         },
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        -420,
-        400
+        -512,
+        620
       ],
-      "id": "24705a72-455c-42f6-a47b-4941ec048e39",
+      "id": "d050bcbb-cc50-4fa0-ae7d-7ccf9bef012e",
       "name": "OpenAI Chat Model",
       "credentials": {
         "openAiApi": {
@@ -41,152 +41,17 @@
     },
     {
       "parameters": {
-        "jsCode": "const day = new Date().getDate();\nreturn [{ json: { source: (day % 2 === 1) ? 'A' : 'B' } }];"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        -860,
-        440
-      ],
-      "id": "ea480c80-ce2d-4802-8ac8-f65865ab8053",
-      "name": "Code"
-    },
-    {
-      "parameters": {
-        "rules": {
-          "values": [
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "leftValue": "={{ $json.source }}",
-                    "rightValue": "A",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    },
-                    "id": "95dcc34f-6623-4ec2-afd1-47cf51128466"
-                  }
-                ],
-                "combinator": "and"
-              }
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "e5f1cc16-99dc-4959-ae5d-2b08b2c4dcac",
-                    "leftValue": "={{ $json.source }}",
-                    "rightValue": "B",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals",
-                      "name": "filter.operator.equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              }
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 3.2,
-      "position": [
-        -640,
-        440
-      ],
-      "id": "3e5ec78a-5d2a-47ae-8be2-1ae40dfd18b6",
-      "name": "Switch"
-    },
-    {
-      "parameters": {
         "promptType": "define",
-        "text": "//** YOUR PROMPT FOR POSTING TECH JOBS COMES HERE **// ",
-        "options": {}
-      },
-      "id": "609c7a41-92da-4c2f-b332-c2b6a38ddb92",
-      "name": "Agent1",
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 1.7,
-      "position": [
-        -100,
-        720
-      ]
-    },
-    {
-      "parameters": {
-        "model": {
-          "__rl": true,
-          "mode": "list",
-          "value": "gpt-4.1-mini"
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        -420,
-        700
-      ],
-      "id": "ffa39495-0dd2-4b4a-829b-b0cf24ff965b",
-      "name": "OpenAI Chat Model1",
-      "credentials": {
-        "openAiApi": {
-          "id": "uK74qCaEPIAIyoAn",
-          "name": "OpenAi account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "person": "TL70CRNMhK",
-        "text": "={{ $json.output }}",
-        "additionalFields": {}
-      },
-      "type": "n8n-nodes-base.linkedIn",
-      "typeVersion": 1,
-      "position": [
-        340,
-        720
-      ],
-      "id": "394c4349-4b71-4b22-aa6e-cd96d4e0c9e6",
-      "name": "Create a post1",
-      "credentials": {
-        "linkedInOAuth2Api": {
-          "id": "qyCHYGPffqo0Asdi",
-          "name": "LinkedIn account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "promptType": "define",
-        "text": "=You are an expert LinkedIn content strategist. When I paste my post text below, you should analyze its main theme and tone, then reply with a single-line Google image search query that will help me find a fitting image to attach.\n{{ $json.output }}",
+        "text": " PROMPT TO SEARCH FOR AN IMAGE ACCORDING TO THE CONTENT COMES HERE ",
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
-        -20,
-        60
+        -224,
+        0
       ],
-      "id": "ab296e4b-23a4-43e5-bb24-dfc0bb323aa5",
+      "id": "3392af48-404c-4a9c-b294-1d10ce6acd7e",
       "name": "AI Agent"
     },
     {
@@ -194,87 +59,65 @@
         "model": {
           "__rl": true,
           "mode": "list",
-          "value": "gpt-4.1-mini"
+          "value": " YOUR OPENAI SUPPORTED MODEL COMES HERE"
         },
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        -420,
-        560
+        -136,
+        220
       ],
-      "id": "16b363ca-3f19-4716-846b-07ef3a7f9b7c",
+      "id": "22a79e8f-eecf-42ea-877e-44f371e7d9f8",
       "name": "OpenAI Chat Model2",
       "credentials": {
         "openAiApi": {
-          "id": "uK74qCaEPIAIyoAn",
+          "id": "//** **//",
           "name": "OpenAi account"
         }
       }
     },
     {
       "parameters": {
-        "chatId": "1296559885",
+        "chatId": " //**  **//",
         "text": "={{ $json.output }}",
         "additionalFields": {}
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        300,
-        160
+        152,
+        100
       ],
-      "id": "7563e9f7-f9eb-4576-ad5f-b392f446ffd4",
+      "id": "031c219f-647e-42dd-80d1-5c3d94e0e65d",
       "name": "Send a text message2",
       "webhookId": "8f1ab691-36eb-4c42-929b-54d6c46fbe91",
       "credentials": {
         "telegramApi": {
-          "id": "AbZrqY6oJx6iKOYY",
+          "id": "//** **//",
           "name": "Telegram account"
         }
       }
     },
     {
       "parameters": {
-        "chatId": "1296559885",
+        "chatId": " //**  **//",
         "text": "Content posted!",
         "additionalFields": {}
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1340,
-        340
+        1472,
+        500
       ],
-      "id": "1766e01a-6357-4db2-95e6-e392c5823836",
+      "id": "c0990e0e-41a5-4ff0-87b4-def837b9b4ef",
       "name": "Send a text message1",
       "webhookId": "3338d86c-0857-4dbf-9ad3-c0ed0b587934",
       "credentials": {
         "telegramApi": {
-          "id": "AbZrqY6oJx6iKOYY",
-          "name": "Telegram account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "chatId": "1296559885",
-        "text": "Jobs posted!",
-        "additionalFields": {}
-      },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
-      "position": [
-        640,
-        720
-      ],
-      "id": "1673a5c8-74cc-4cac-addd-bf6078777e50",
-      "name": "Send a text message",
-      "webhookId": "3338d86c-0857-4dbf-9ad3-c0ed0b587934",
-      "credentials": {
-        "telegramApi": {
-          "id": "AbZrqY6oJx6iKOYY",
+          "id": " //** **// ",
           "name": "Telegram account"
         }
       }
@@ -284,7 +127,7 @@
         "operation": "append",
         "documentId": {
           "__rl": true,
-          "value": "https://docs.google.com/spreadsheets/d/19CGSth6FGw-FsO7uOb-fZJVpobhJplQNILM7Swoo7Ug/edit?gid=99656907#gid=99656907",
+          "value": "YOUR GOOGLE SHEETS URL COMES HERE",
           "mode": "url"
         },
         "sheetName": {
@@ -292,7 +135,7 @@
           "value": 99656907,
           "mode": "list",
           "cachedResultName": "content",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/19CGSth6FGw-FsO7uOb-fZJVpobhJplQNILM7Swoo7Ug/edit#gid=99656907"
+          "cachedResultUrl": "YOUR GOOGLE SHEETS URL COMES HERE"
         },
         "columns": {
           "mappingMode": "defineBelow",
@@ -340,36 +183,36 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        -20,
-        340
+        -146,
+        400
       ],
-      "id": "c5d0f1c7-4c1c-430d-b78c-e29d6d0d844d",
+      "id": "62eefbd4-5aed-4099-a9a7-f60edbf3bd13",
       "name": "Append row in sheet",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "EpOtWrUIuzLQ0wVF",
+          "id": "//** **//",
           "name": "Google Sheets account"
         }
       }
     },
     {
       "parameters": {
-        "chatId": "1296559885",
+        "chatId": " //**  **//",
         "text": "Content saved to Sheets!",
         "additionalFields": {}
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        280,
-        340
+        152,
+        400
       ],
-      "id": "fbb3f50e-be6f-4a5a-a094-10fd5992c268",
+      "id": "2e0601f7-c368-48f4-ba8d-9bce0a27c2fe",
       "name": "Send a text message3",
       "webhookId": "3338d86c-0857-4dbf-9ad3-c0ed0b587934",
       "credentials": {
         "telegramApi": {
-          "id": "AbZrqY6oJx6iKOYY",
+          "id": "//** **//",
           "name": "Telegram account"
         }
       }
@@ -384,14 +227,14 @@
       "type": "n8n-nodes-base.linkedIn",
       "typeVersion": 1,
       "position": [
-        900,
-        340
+        1032,
+        500
       ],
-      "id": "822abfc4-9def-40fe-929f-4eff2c4a42be",
+      "id": "d2d34bea-4026-4243-a59b-043abe1d66b0",
       "name": "Create a post",
       "credentials": {
         "linkedInOAuth2Api": {
-          "id": "qyCHYGPffqo0Asdi",
+          "id": "//** **//",
           "name": "LinkedIn account"
         }
       }
@@ -403,10 +246,10 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        -80,
-        540
+        -146,
+        600
       ],
-      "id": "ce538fa3-4346-428b-af39-8251d7e29044",
+      "id": "73815693-7017-40c2-8687-e510ba610e00",
       "name": "Wait",
       "webhookId": "1af2149f-9f62-4481-b0be-ad5c3011a54e"
     },
@@ -414,7 +257,7 @@
       "parameters": {
         "documentId": {
           "__rl": true,
-          "value": "https://docs.google.com/spreadsheets/d/19CGSth6FGw-FsO7uOb-fZJVpobhJplQNILM7Swoo7Ug/edit?usp=sharing",
+          "value": "YOUR GOOGLE SHEETS URL COMES HERE",
           "mode": "url"
         },
         "sheetName": {
@@ -422,7 +265,7 @@
           "value": 99656907,
           "mode": "list",
           "cachedResultName": "content",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/19CGSth6FGw-FsO7uOb-fZJVpobhJplQNILM7Swoo7Ug/edit#gid=99656907"
+          "cachedResultUrl": " YOUR GOOGLE SHEETS URL COMES HERE "
         },
         "options": {
           "dataLocationOnSheet": {
@@ -435,14 +278,14 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        120,
-        540
+        152,
+        600
       ],
-      "id": "1f07cae7-e444-4358-acfb-680d9006ab13",
+      "id": "4271df44-132b-40c1-8997-1904264ef268",
       "name": "Get row(s) in sheet",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "EpOtWrUIuzLQ0wVF",
+          "id": " //**  **// ",
           "name": "Google Sheets account"
         }
       }
@@ -454,10 +297,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        340,
-        540
+        372,
+        600
       ],
-      "id": "1a9f1df6-c5fd-40be-934e-1b3048eed25a",
+      "id": "831f0fbc-fdb1-49e6-9176-d3d0ec0f3b13",
       "name": "Code1"
     },
     {
@@ -488,10 +331,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        780,
-        540
+        812,
+        600
       ],
-      "id": "ef502109-7bc2-4b91-bd45-ad1a9a74c09e",
+      "id": "a0d9efe9-856d-4e11-8bdb-3d8c648b8ff9",
       "name": "If"
     },
     {
@@ -502,10 +345,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        580,
-        540
+        592,
+        600
       ],
-      "id": "f39e494c-5a7c-45a4-a513-4f2f8ecd926b",
+      "id": "398472e4-d4ee-4b73-a191-bb6b2c4051dd",
       "name": "Node B",
       "retryOnFail": true,
       "waitBetweenTries": 5000,
@@ -525,30 +368,30 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        -1060,
-        440
+        -820,
+        400
       ],
-      "id": "4d55cb9d-00bd-407c-a372-ead97a2b63d3",
+      "id": "a491e652-615c-4bae-86d9-e0e1dae7bfdd",
       "name": "Schedule Trigger"
     },
     {
       "parameters": {
-        "chatId": "1296559885",
+        "chatId": " //**  **//",
         "text": "Content posted!",
         "additionalFields": {}
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1340,
-        720
+        1472,
+        700
       ],
-      "id": "cf6d892c-c334-49ce-9c30-be56dd8ab1c6",
+      "id": "f88f9034-f613-4070-91ab-02042de8311c",
       "name": "Send a text message4",
       "webhookId": "3338d86c-0857-4dbf-9ad3-c0ed0b587934",
       "credentials": {
         "telegramApi": {
-          "id": "AbZrqY6oJx6iKOYY",
+          "id": " //**  **//",
           "name": "Telegram account"
         }
       }
@@ -562,14 +405,14 @@
       "type": "n8n-nodes-base.linkedIn",
       "typeVersion": 1,
       "position": [
-        900,
-        720
+        1032,
+        700
       ],
-      "id": "d004f93e-b854-4904-84c5-fdb65096f4d5",
+      "id": "acf7c287-01d8-4b73-bea0-f9b3e3bdc9d1",
       "name": "Create a post2",
       "credentials": {
         "linkedInOAuth2Api": {
-          "id": "qyCHYGPffqo0Asdi",
+          "id": " //**  **//",
           "name": "LinkedIn account"
         }
       }
@@ -579,7 +422,7 @@
         "operation": "update",
         "documentId": {
           "__rl": true,
-          "value": "https://docs.google.com/spreadsheets/d/19CGSth6FGw-FsO7uOb-fZJVpobhJplQNILM7Swoo7Ug/edit?gid=99656907#gid=99656907",
+          "value": " YOUR GOOGLE SHEETS URL COMES HERE ",
           "mode": "url"
         },
         "sheetName": {
@@ -587,7 +430,7 @@
           "value": 99656907,
           "mode": "list",
           "cachedResultName": "content",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/19CGSth6FGw-FsO7uOb-fZJVpobhJplQNILM7Swoo7Ug/edit#gid=99656907"
+          "cachedResultUrl": " YOUR GOOGLE SHEETS URL COMES HERE "
         },
         "columns": {
           "mappingMode": "defineBelow",
@@ -649,14 +492,14 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        1120,
-        340
+        1252,
+        500
       ],
-      "id": "198ab8e9-d74b-416a-a7b0-2e597b864c7b",
+      "id": "2002a1c4-7fc3-43e2-8823-17f6e45cbf91",
       "name": "Update row in sheet",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "EpOtWrUIuzLQ0wVF",
+          "id": " //**  **//",
           "name": "Google Sheets account"
         }
       }
@@ -666,7 +509,7 @@
         "operation": "update",
         "documentId": {
           "__rl": true,
-          "value": "https://docs.google.com/spreadsheets/d/19CGSth6FGw-FsO7uOb-fZJVpobhJplQNILM7Swoo7Ug/edit?gid=99656907#gid=99656907",
+          "value": " YOUR GOOGLE SHEETS URL COMES HERE ",
           "mode": "url"
         },
         "sheetName": {
@@ -674,7 +517,7 @@
           "value": 99656907,
           "mode": "list",
           "cachedResultName": "content",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/19CGSth6FGw-FsO7uOb-fZJVpobhJplQNILM7Swoo7Ug/edit#gid=99656907"
+          "cachedResultUrl": " YOUR GOOGLE SHEETS URL COMES HERE "
         },
         "columns": {
           "mappingMode": "defineBelow",
@@ -736,14 +579,14 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        1120,
-        720
+        1252,
+        700
       ],
-      "id": "c48142c2-5173-42f9-ae6f-3de9e8bce0c9",
+      "id": "f952d25d-a0d8-485b-b0d0-c94cdbb630b3",
       "name": "Update row in sheet1",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "EpOtWrUIuzLQ0wVF",
+          "id": " //**  **// ",
           "name": "Google Sheets account"
         }
       }
@@ -782,68 +625,6 @@
         ]
       ]
     },
-    "Code": {
-      "main": [
-        [
-          {
-            "node": "Switch",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Switch": {
-      "main": [
-        [
-          {
-            "node": "Agent",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Agent1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Agent1": {
-      "main": [
-        [
-          {
-            "node": "Create a post1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "OpenAI Chat Model1": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "Agent1",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Create a post1": {
-      "main": [
-        [
-          {
-            "node": "Send a text message",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "AI Agent": {
       "main": [
         [
@@ -864,11 +645,6 @@
             "index": 0
           }
         ]
-      ]
-    },
-    "Send a text message1": {
-      "main": [
-        []
       ]
     },
     "Append row in sheet": {
@@ -959,16 +735,11 @@
       "main": [
         [
           {
-            "node": "Code",
+            "node": "Agent",
             "type": "main",
             "index": 0
           }
         ]
-      ]
-    },
-    "Send a text message4": {
-      "main": [
-        []
       ]
     },
     "Create a post2": {
@@ -1007,7 +778,6 @@
   },
   "pinData": {},
   "meta": {
-    "templateCredsSetupCompleted": true,
     "instanceId": "61950adbf2a45057cf86db78736e0f16ca9c8eeb9f4fcada284bdab4bbe02a89"
   }
 }
