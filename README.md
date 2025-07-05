@@ -1,6 +1,6 @@
-##Project Title: n8n LinkedIn Auto-Poster with AI-driven Content & Image Selection
+## **Project Title: n8n LinkedIn Auto-Poster with AI-driven Content & Image Selection**
 
-##Overview This repository contains an automated n8n workflow that creates and publishes LinkedIn posts on a scheduled basis using AI agents. It generates content, searches (or generates) suitable images, logs post details in Google Sheets, and sends Telegram notifications at key steps. If manual image review is skipped, posts are still published without images to maintain consistency.
+## **Overview** This repository contains an automated n8n workflow that creates and publishes LinkedIn posts on a scheduled basis using AI agents. It generates content, searches (or generates) suitable images, logs post details in Google Sheets, and sends Telegram notifications at key steps. If manual image review is skipped, posts are still published without images to maintain consistency.
 
 ---
 
