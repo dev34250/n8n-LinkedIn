@@ -21,28 +21,20 @@
 
 ## 📦 Architecture & Workflow
 
-```mermaid
-flowchart LR
-  subgraph Schedule Trigger
-    A[Schedule Trigger @ 11:00 AM] --> B[AI Agent: Content]
-  end
+Below is a high-level, step-by-step overview of how the automation operates. Each stage can be customized directly in your n8n workflow for maximum flexibility.
 
-  B --> C[Append Row to Google Sheets]
-  C --> D[Wait Node]
-  D --> E[Retrieve Latest Row]
-  E --> F[HTTP Request: Fetch Image]
-  F --> G{Image Available?}
-  G -- Yes --> H[Create LinkedIn Post with Image]
-  G -- No --> I[Create LinkedIn Post without Image]
-  H --> J[Update Row: ✅ Posted]
-  I --> J
-  J --> K[Telegram: Content posted!]
-
-  subgraph Notifications
-    B --> L[Telegram: Content Generated]
-    C --> M[Telegram: Saved to Sheets]
-  end
-```
+| Step | Component                       | Description                                                          |
+| ---- | ------------------------------- | -------------------------------------------------------------------- |
+| 1️⃣  | **Schedule Trigger**            | Fires daily at your specified time (default: 11:00 AM)               |
+| 2️⃣  | **AI Agent (Content)**          | Generates your LinkedIn post copy via OpenAI Chat Model              |
+| 3️⃣  | **Append Row to Google Sheets** | Logs the post date and reserves a row for image markup               |
+| 4️⃣  | **Telegram Notification**       | Alerts you that content is generated and saved to Sheets             |
+| 5️⃣  | **Wait Node**                   | Brief pause to ensure the sheet update is committed                  |
+| 6️⃣  | **Retrieve Latest Row**         | Fetches the newest sheet entry for image processing                  |
+| 7️⃣  | **Fetch or Skip Image**         | Attempts to download the AI‑provided image URL; skips if unavailable |
+| 8️⃣  | **LinkedIn Post Creation**      | Publishes your post on LinkedIn, embedding the image if present      |
+| 9️⃣  | **Update Row as Posted**        | Marks the row with a ✅ under “Posted” for tracking                   |
+| 🔟   | **Final Telegram Notification** | Confirms the successful LinkedIn upload                              |
 
 ---
 
@@ -158,6 +150,6 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## ✉️ Contact
 
-* **Maintainer**: YOUR NAME HERE
-* **Email**: dev34250@gmail.com(mailto:dev34250@gmail.com)
+* **Maintainer**: DEV SHARMA
+* **Email**: dev34250@gmail.com
 * **LinkedIn**: [DEV SHARMA](https://www.linkedin.com/in/devsharma2004/)
