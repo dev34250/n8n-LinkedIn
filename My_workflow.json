@@ -1,5 +1,4 @@
 {
-  "name": "My workflow",
   "nodes": [
     {
       "parameters": {
@@ -750,7 +749,6 @@
       }
     }
   ],
-  "pinData": {},
   "connections": {
     "Agent": {
       "main": [
@@ -868,6 +866,11 @@
         ]
       ]
     },
+    "Send a text message1": {
+      "main": [
+        []
+      ]
+    },
     "Append row in sheet": {
       "main": [
         [
@@ -952,11 +955,6 @@
         ]
       ]
     },
-    "Send a text message1": {
-      "main": [
-        []
-      ]
-    },
     "Schedule Trigger": {
       "main": [
         [
@@ -1007,18 +1005,9 @@
       ]
     }
   },
-  "active": true,
-  "settings": {
-    "executionOrder": "v1",
-    "timezone": "Asia/Kolkata",
-    "callerPolicy": "workflowsFromSameOwner",
-    "executionTimeout": -1
-  },
-  "versionId": "b37b6b45-6f7d-4b15-b0b9-eecc71e2c571",
+  "pinData": {},
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "61950adbf2a45057cf86db78736e0f16ca9c8eeb9f4fcada284bdab4bbe02a89"
-  },
-  "id": "X2CFXXkwQW1vZkuX",
-  "tags": []
+  }
 }
